@@ -10,12 +10,9 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-
-class CoffeeList(APIView):
-
-    permission_classes = [AllowAny]
-
-    def get(self, request):
-        coffee = Coffee.objects.all()
-        serializer = CoffeeSerializer(coffee, many=True)
-        return Response(serializer.data)
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_all_coffee(request):
+    coffee = Coffee.objects.all()
+    serializer = CoffeeSerializer(coffee, many=True)
+    return Response(serializer.data)
